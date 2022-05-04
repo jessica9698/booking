@@ -190,7 +190,7 @@
 					<input class="form-control locationoptn" id="Input" type="text" placeholder="Use current location">
 				</div>
 			</div>
-		{{--	{{dd($listing)}} --}}
+{{--{{dd($listing)}} --}}
 			<div class="row position-relative">
 				<div class="col-md-4">
 					<!-- <input class="form-control person-icon" id="room-capacity" type="text" placeholder="Room Capacity"> -->
@@ -677,6 +677,8 @@
 		var roomCapacity = $("#room-capacity").val();
 		var price = $("#search-price").val();
 		var amenities = $("#search-amenities").val();
+		var checkIn = $("#check_in").val();
+		var checkOut = $("#check_out").val();
 		
 		      
 		   $.ajax({
@@ -689,6 +691,8 @@
 				roomCapacity: roomCapacity,
 				price: price,
 				amenities: amenities,
+				checkIn: checkIn,
+				checkOut: checkOut
 			},   
 			success: function(response){
 				$("#listing-section").html(response);

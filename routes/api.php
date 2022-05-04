@@ -34,10 +34,16 @@ Route::post('/registerform', [App\Http\Controllers\Auth\RegisterController::clas
     return view('homepage');
 });*/
 
+// Route::get("/payment", function(){
+//     return View::make("payment");
+//  });
+ Route::get('/payment', [App\Http\Controllers\ListingController::class, 'payment'])->name('payment');
+
 Route::get('/', [App\Http\Controllers\ListingController::class, 'index'])->name('homepage');
 Route::post('/getlisting', [App\Http\Controllers\ListingController::class, 'getlisting'])->name('getlisting');
 Route::get('/listing_details/{id}', [App\Http\Controllers\ListingController::class, 'get_listing_details'])->name('listing_details');
 
 //Route::get('/apitest', [App\Http\Controllers\ListingController::class, 'apitest'])->name('apitest');
+
 Route::get('/wishlist', [App\Http\Controllers\ListingController::class, 'wishlist'])->name('wishlist');
 

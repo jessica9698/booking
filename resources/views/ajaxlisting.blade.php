@@ -38,11 +38,11 @@
                                   <div class="carousel-inner">
                                 
                                     @php $key = 0;@endphp
- {{----    Foreach images issues ---}}
+        {{----    Foreach images issues ---}}
                                     @foreach ($boardroom['listing_gallery'] as $images)
 
                                     <div class="carousel-item {{$key == 0 ? 'active' : ''}}">
-                                        <img src="{{ asset('imgs/' . $boardroom['listing_gallery']['picture_name']) }}" >
+                                        <img src="{{ asset('imgs/' . $images['picture_name']) }}" >
                                     </div>
                                     @php $key++;@endphp
                                     @endforeach
@@ -93,7 +93,10 @@
 
             </div>
             <div class="homemap">
-                {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2356.590006342726!2d-1.550836584595745!3d53.79678434857748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795c1e7da1fdef%3A0xa7648511203ca6cb!2sToronto%20Square%2C%202%20City%20Square%2C%20Leeds%20LS1%202ES!5e0!3m2!1sen!2suk!4v1647347585454!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> --}}
+                <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2356.590006342726!2d-1.550836584595745!3d53.79678434857748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795c1e7da1fdef%3A0xa7648511203ca6cb!2sToronto%20Square%2C%202%20City%20Square%2C%20Leeds%20LS1%202ES!5e0!3m2!1sen!2suk!4v1647347585454!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>  -->
+
+
+                
             </div>
         </div>
     </div>
@@ -105,7 +108,7 @@
 		var locationArr = @json($locations);		
 
 		var mainCoords = locationArr[0];
-
+        console.log(locationArr);
 		var mapOptions = {
 			center: mainCoords,
 			zoom: 14
@@ -115,7 +118,7 @@
 
 		for (var i = 0; i < locationArr.length; i++) {
 			var myCoords = locationArr[i];
-
+   ;
 			new google.maps.Marker({
 				position: myCoords,
 				map: map

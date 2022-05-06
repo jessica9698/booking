@@ -293,6 +293,7 @@ ul.fivestars li {
     right: 5px;
     color: #fff;
     font-size: 20px;
+    z-index: 999999;
 }
 .cardslider .carousel-indicators [data-bs-target],
 .brslider .carousel-indicators [data-bs-target] {

@@ -614,7 +614,7 @@ class ListingController extends Controller
     }';
 
        
-        // $listing = json_decode(stripslashes($data),true); 
+        //$listing = json_decode(stripslashes($data),true); 
         $listings = json_decode(stripslashes($data),true); 
         Session::put('startdate', $request->input("startDate"));
         Session::get('startdate');
@@ -725,7 +725,7 @@ class ListingController extends Controller
                     "status": 1,
                     "half_day_discount": null,
                     "half_discount_rate": null,
-                    "full_day_discount": null,
+                    "full_day_discount": 10,
                     "full_discount_rate": null,
                     "hst_check": null,
                     "sale_tax": null,
@@ -1082,8 +1082,7 @@ class ListingController extends Controller
             $startDate =  Session::get('startdate')." ".Session::get('time');
             $endDate = Session::get('enddate')." ".Session::get('timeout');
              
-         
-           
+
          
             //  $time = Session::get('time');
             // $timeout =  Session::get('timeout');
@@ -1093,11 +1092,15 @@ class ListingController extends Controller
           
             $price_per_hours = $listing['data'][0]['price_per_hour'];
             $calculate_rate =  $price_per_hours * $hourdiff;
-             
-          // dd($hourdiff);
+            $discountPrice = ($calculate_rate * $listing['data'][0]['full_day_discount'])/100 ;
+            $totalPrice =  $calculate_rate - $discountPrice ;
+        
+        
+        
+            //dd($totalPrice);
             
             // dd($listings);
-        return view('listing_details' ,compact('listing', 'other_boardrooms', 'hourdiff' , 'calculate_rate', 'startDate'));  
+        return view('listing_details' ,compact('listing', 'other_boardrooms', 'hourdiff' , 'calculate_rate', 'startDate','discountPrice','totalPrice'));  
     }
 
     public function payment(Request $request){
@@ -1185,25 +1188,33 @@ public function wishlist()
             //dd($listing);
          
     return view('wishlist', compact('listing'));
+ }
+
+public function saved_boardroom(Request $request){
+    
+    return response()->json([
+        'save' => "Wishlist added",
+       
+   
+        ], 200);
+
+//    return view('saved_boardroom' );  
+  
+      
 }
 
-// public function addToWishlist(Request $request)
-//     {
-//       //Validating title and body field
-//       $this->validate($request, array(
-//           'user_id'=>'required',
-//           'listing_id' =>'required',
-//         ));
+public function msg(Request $request){
 
-//       $wishlist = new Wishlist;
-//       $wishlist->user_id = $request->user_id;
-//       $wishlist->listing_id = $request->listing_id;
+ //dd($request);
 
-
-//       $wishlist->save();
-
-//       return redirect()->back()->with('flash_message',
-//           'Item, '. $wishlist->listing->title.' Added to your wishlist.');
-//     }
+    return response()->json([
+        'msg' => "msg added",
+       
+    
+        
+        ], 200);
+   // return view('msg');
+    
+}
 }
 

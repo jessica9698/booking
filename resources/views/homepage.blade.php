@@ -705,26 +705,9 @@
 		});
 
 
-
-		/*$(document).ready(function(){
-			$(".addtowishlist").live('click', function(evt) {
-			var link_data = $(this).data('data');
-			$.ajax({
-				type: "POST",
-				url: 'addtowishlist.php',
-				data: ({product_id: link_data}),
-				success: function(data) {
-					if(data == '1')
-					{
-						$('a[data-data="' + link_data + '"] > i.whishstate').css({"color":"red"})
-					}
-					else{
-						$('a[data-data="' + link_data + '"] > i.whishstate').css({"color":"red"})
-					}
-				}   
-			});   
-			}); 
-		});*/
+		
+			 
+	
    </script>
 	
 </body>

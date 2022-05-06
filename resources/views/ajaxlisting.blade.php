@@ -24,7 +24,7 @@
 
             @foreach ($listings['data'] as $boardroom)
             {{-- {{dd($boardroom)}} --}}
-            <a href="{{'/api/listing_details/' . $boardroom['id'] }}">
+            <a href="{{'/api/listing-details/' . $boardroom['id'] }}">
                 <div class="cardslider">
                     <div class="row mb-2">
                         <div class="col-md-4">
@@ -73,7 +73,7 @@
                               <a class="discavl">DISCOUNT AVAILABLE</a>						  
                               <a class="rdybook">READY TO BOOK</a>	
                               <a class="pprpln"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;1.1km</a>	
-                              <a class="likes"><i class="fa fa-heart-o" aria-hidden="true"></i></a>				
+                              <a id="likes"  onclick="saveboardroom()" class="likes"><i class="fa fa-heart-o" aria-hidden="true"></i></a>				
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -125,8 +125,37 @@
 			});	
 		}
     }
+
+       
+		function saveboardroom() {   
+		var wishlist = $('#wishlist').val();
+		var listingid = $('#listingid').val();
+        var userid = $('#userid').val();
+
+		   $.ajax({
+			type:'get',
+		   	url: @json(url('/api/save-boardroom')),
+			data: {
+				wishlist: wishlist,
+				listingid: listingid,
+				userid: userid,
+			},   
+			success: function(response){
+				console.log('wishlist');
+			}
+		   });
+		}
+    
+$('#likes').click(function(){});
+$('#likes').click(function()
+{alert('worked')});
 </script>
 
 <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSuy4U3KFAhhK1gtshBsDJIiKDnK16upg&libraries=places&callback=initMap">
 </script>
+
+
+
+
+

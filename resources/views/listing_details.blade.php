@@ -9,6 +9,12 @@
 {{--{{ dd($listing->hosting_rules[0]->hosting_rule) }} --}}
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
 <section class="brslider position-relative">
     <div id="demo" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -43,8 +49,6 @@
     {{--{{dd($listing)}}--}}
     <a class="request-to-book">THIS IS A <span class="text-white">REQUEST TO BOOK</span> BOARDROOM <i class="fa fa-question"></i></a>
 </section>
-
-
 
 <section class="brdetailmain pt-3 pb-5">
     <div class="container">
@@ -130,7 +134,10 @@
                     {{--  {{ isset($listing['hosting_rules'][0]['hosting_rule']) ? $listing['hosting_rules'][0]hosting_rule : '' }} --}}
                     </ul>
                     <a href="#">Show all House Rules</a><br>
-                    <button type="button" class="btn btn-outline-secondary">CONTACT HOST</button>
+                    
+     
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+                        CONTACT HOST</button>
                 </section>
             </div>
             <div class="col-md-4">
@@ -154,16 +161,19 @@
                     <!-- <h4>{{$listing['data'][0]['price_per_hour']}}</h4> 
                 onclick="document.location='{{ url('/api/payment') }}'"-->
                     <p>
-                        {{$hourdiff}} hours <br/>
-                        {{ Session::get('time');}} - 
-                        {{ Session::get('timeout');}}
+                      {{$hourdiff}} hours <br/>
+                      {{  $startDate =  Session::get('startdate')." - ".Session::get('time');}}
+                      {{ $endDate = Session::get('enddate')." ".Session::get('timeout');}}
+                      {{-- {{ Session::get('time');}} -   {{ Session::get('timeout');}} --}}
+
+                    Discounted_Rate {{$totalPrice}} 
                     </p>
 
                  
 
                     @php 
                    
-                    if(($startDate == " ")) {  @endphp
+                    if(($startDate == " - ")) {  @endphp
                         <div class="col-md-6 position-relative">
 					<input type="text" id="datepickerFrom" class="form-control calendar-icon" placeholder="Select Date*">
 				    </div>
@@ -172,7 +182,7 @@
                       
                         <a class="chngchk" href="#">Change date / Check availability</a>
                     
-                        @php } @endphp
+                    @php } @endphp
                  
                         <br>
                     <button type="submit" id="checkout"  class="btn btn-primary">REQUEST TO BOARDROOM</button>
@@ -374,6 +384,62 @@
         </section>
     </div>
 </section>
+
+<!-- Modal -->
+<!-- <form action="{{ url('/api/msg') }}" method="get"> -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send message to Host</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+   
+
+      <div class="modal-body">
+        <input type="text" id="msg">
+        <input type="hidden" id="listingid" value="{{$listing['data'][0]['id']}}">
+        <input type="hidden" id="userid" value="{{$listing['data'][0]['user_id']}}">
+
+      </div>
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button-->
+        <button type="submit " onclick="sendmsg()" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- </form> -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script>
+    	function sendmsg() { 
+		var msg = $('#msg').val();
+        var listingid = $('#listingid').val();
+        var userid = $('#userid').val();
+
+		      
+		   $.ajax({
+			type:'post',
+		   	url: @json(url('/api/msg')),
+			data: {
+				msg: msg,
+                listingid: listingid,
+				userid: userid,
+			},   
+			success: function(response){
+				console.log('msg');
+			}
+		   });
+		}
+
+
+</script>
+
+
 <!--script src="https://js.stripe.com/v3"></script>
 <script>
     var stripe = Stripe("pk_test_51IgcyRLzBzBxz2hSXts52KO8lqADelOPrvYvjyKuoP8xDCDGOIJKuqwhd7fRpnkJ7lBaU1i1J6uXQtX2aoPboVEo00wgqROmnq");
